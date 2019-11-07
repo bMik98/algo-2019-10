@@ -6,24 +6,50 @@
 ; r3 - accumulator 
 ; r4 - dummy for swap 
 ;
+;Протестировать работу на следующих данных:
+;а. 5 * 3 = 15
+;в. 1111 * 111 = 123321
+;б. 1 * 1000000 = 1000000 (быстро)
+;г. 1000000 * 1 = 1000000 (быстро)
+;д. 123 * 0 = 0
+;е. 0 * 456 = 0
+;
+;Custom tests
+; 0 * 0 = 0
+; 1 * 0 = 0 
+; 0 * 1 = 0
+; 1 * 1 = 1
+; 5 * 5 = 25
+;
+<input> 5 3
+;<input> 1111 111
+;<input> 1 1000000
+;<input> 1000000 1
+;<input> 123 0
+;<input> 0 456
 
-<input> 3 10
+;<input> 0 0
+;<input> 1 0
+;<input> 0 1
+;<input> 1 1
+;<input> 5 5
 
-load =0		;reset accumulator r3
+load =0		;reset accumulator r3 to 0
 store 3
-
-read 1		;read a to r1
-load 1		;if(a = 0) goto finish
-jz finish
 
 read 2		;read b to r2
 load 2		;if(b = 0) goto finish
 jz finish		
 
-sub 1		;if (b > a) goto do_it 
-jz do_it
-jgtz do_it		
+read 1		;read a to r1
+load 1		;if(a = 0) goto finish
+jz finish
 
+sub 2		;if (counter - value) > 0 goto swap r1 and r2 
+jgtz swap   
+jmp do_it		;else goto do_it
+
+swap:
 load 1		;swap r1 and r2 if counter is greater than value
 store 4
 load 2
