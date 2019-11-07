@@ -1,0 +1,64 @@
+; Division by substraction of b from a
+; <input> a b
+;
+; r1 - reminder (descending accumulator)
+; r2 - divisor (value to substruct)
+; r3 - quotent (counter of substructions)
+;
+;Протестировать работу на следующих данных:
+;а. 50 / 30 = 1 и 20
+;б. 25 / 25 = 1 и 0
+;в. 5 / 30 = 0 и 5
+;г. 100001 / 2 = 50000 и 1
+;д. 0 / 123456 = 0 и 0
+;е. 123456 / 0 = нет ответа (выход пустой, программа остановлена)
+;
+;Custom tests
+; 0 / 0 = empty output
+; 0 / 1 = 0
+; 1 / 1 = 1
+; 50 / 1 = 50
+;
+
+<input> 50 30
+;<input> 25 25
+;<input> 5 30
+;<input> 100001 2
+;<input> 0 123456
+;<input> 123456 0
+
+;<input> 0 0
+;<input> 0 1
+;<input> 1 1
+;<input> 50 1
+
+load =0		;reset quotent r3
+store 3
+
+read 1		;read a to r1
+
+read 2		;read b to r2
+load 2		;if(b = 0) goto stop
+jz stop		
+
+loop:		;division by substruction loop
+	load 1	;r0 = r1 - r2
+	sub 2
+	jgtz continue	;if reminder > divisor continue loop
+	jz continue	;if reminder = divisor continue loop
+	jmp finish		;else finish successfully
+
+continue:
+	store 1	;r1 = r0
+
+	load 3	;r3 = r3 + 1
+	add =1
+	store 3
+jmp loop		;while true
+
+finish:
+write 3		;output quotent
+write 1		;output reminder
+
+stop:
+halt
