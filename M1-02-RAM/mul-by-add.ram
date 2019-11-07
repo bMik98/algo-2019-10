@@ -7,7 +7,7 @@
 ; r4 - dummy for swap 
 ;
 
-<input> 3 30005
+<input> 3 10
 
 load =0		;reset accumulator r3
 store 3
@@ -23,7 +23,7 @@ jz finish
 sub 1		;if (b > a) goto do_it 
 jgtz do_it		
 
-load 1		;swap r1 and r2
+load 1		;swap r1 and r2 if counter is greater than value
 store 4
 load 2
 store 1 
