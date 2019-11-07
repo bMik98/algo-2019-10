@@ -1,0 +1,45 @@
+; Multiplication by addition of a and b
+; <input> a b
+;
+; r1 - counter of additions = min(a, b)
+; r2 - value to add = max(a, b)
+; r3 - accumulator 
+; r4 - dummy for swap 
+;
+
+<input> 1111 111
+
+load =0		;reset accumulator r3
+store 3
+
+read 1		;read a to r1
+load 1		;if(a = 0) goto finish
+jz finish
+
+read 2		;read b to r2
+load 2		;if(b = 0) goto finish
+jz finish		
+
+sub 1		;if (b > a) goto do_it 
+jgtz do_it		
+
+load 1		;swap r1 and r2 if counter is greater than value
+store 4
+load 2
+store 1 
+load 4
+store 2
+
+do_it:		;multiply loop
+	load 3	;r3 = r3 + r2
+	add 2
+	store 3
+	
+	load 1	;r1 = r1 - 1
+	sub =1
+	store 1
+jgtz do_it		;while r1 > 0
+
+finish:
+write 3		;output accumulator r3
+halt
