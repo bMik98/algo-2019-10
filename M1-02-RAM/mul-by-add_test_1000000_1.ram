@@ -21,6 +21,7 @@ load 2		;if(b = 0) goto finish
 jz finish		
 
 sub 1		;if (b > a) goto do_it 
+jz do_it
 jgtz do_it		
 
 load 1		;swap r1 and r2 if counter is greater than value
