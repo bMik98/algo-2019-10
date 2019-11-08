@@ -1,43 +1,24 @@
 package model;
 
-public class FactorArray<T> implements IArray<T> {
+public class FactorArray<T> extends AbstractLinearArray<T> {
 
-    private Object[] array;
+    private static final int DEFAULT_FACTOR = 50;
+    private static final int INIT_LENGTH = 10;
+
     private int factor;
-    private int size;
 
-    public FactorArray(int factor, int initLength) {
+    @SuppressWarnings("WeakerAccess")
+    public FactorArray(int factor, int size) {
+        super(size);
         this.factor = factor;
-        array = new Object[initLength];
-        size = 0;
     }
 
     public FactorArray() {
-        this(50, 10);
+        this(DEFAULT_FACTOR, INIT_LENGTH);
     }
 
     @Override
-    public int size() {
-        return size;
-    }
-
-    @Override
-    public void add(T item) {
-        if (size() == array.length)
-            resize();
-        array[size] = item;
-        size++;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public T get(int index) {
-        return (T)array[index];
-    }
-
-    private void resize() {
-        Object[] newArray = new Object[array.length + array.length * factor / 100];
-        System.arraycopy(array, 0, newArray, 0, array.length);
-        array = newArray;
+    protected int arrayIncrementValue() {
+        return allocatedSize() * factor / 100;
     }
 }
