@@ -6,11 +6,13 @@ public class VectorArray<T> extends AbstractLinearArray<T> {
 
     private int vector;
 
+    @SuppressWarnings("WeakerAccess")
     public VectorArray(int vector) {
         super();
         this.vector = vector;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public VectorArray() {
         this(DEFAULT_VECTOR);
     }

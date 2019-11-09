@@ -3,7 +3,7 @@ package model;
 public class FactorArray<T> extends AbstractLinearArray<T> {
 
     private static final int DEFAULT_FACTOR = 50;
-    private static final int INIT_LENGTH = 10;
+    private static final int INIT_LENGTH = 0;
 
     private int factor;
 
@@ -19,6 +19,6 @@ public class FactorArray<T> extends AbstractLinearArray<T> {
 
     @Override
     protected int arrayIncrementValue() {
-        return allocatedSize() * factor / 100;
+        return allocatedSize() * factor / 100 + 1;
     }
 }

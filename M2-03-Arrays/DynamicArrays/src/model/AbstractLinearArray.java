@@ -2,7 +2,7 @@ package model;
 
 abstract class AbstractLinearArray<T> implements IArray<T> {
 
-    static final int INITIAL_SIZE = 0;
+    private static final int INITIAL_SIZE = 0;
 
     private T[] array;
     private int size;
@@ -26,20 +26,38 @@ abstract class AbstractLinearArray<T> implements IArray<T> {
 
     @Override
     public void add(T item) {
-        if (array.length == size()) {
-            extend();
+        if (array.length == size) {
+            T[] newArray = createArray(allocatedSize() + arrayIncrementValue());
+            System.arraycopy(array, 0, newArray, 0, size);
+            array = newArray;
         }
-        array[size()] = item;
+        array[size] = item;
+        size++;
     }
 
     @Override
     public void add(T item, int index) {
-
+        if (index < 0 || index > size) {
+            throw new ArrayIndexOutOfBoundsException(index);
+        } else if (index == size) {
+            add(item);
+        } else {
+            if (array.length == size) {
+                T[] newArray = createArray(allocatedSize() + arrayIncrementValue());
+                System.arraycopy(array, 0, newArray, 0, index);
+                System.arraycopy(array, index, newArray, index + 1, size - index);
+                array = newArray;
+            } else {
+                System.arraycopy(array, index, array, index + 1, size - index);
+            }
+            array[index] = item;
+            size++;
+        }
     }
 
     @Override
     public T get(int index) {
-        if (index < 0 || index > size() - 1) {
+        if (index < 0 || index > size - 1) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
         return array[index];
@@ -47,19 +65,10 @@ abstract class AbstractLinearArray<T> implements IArray<T> {
 
     @Override
     public T remove(int index) {
-        if (size() == 0) {
-            return null;
-        }
         T result = get(index);
-        System.arraycopy(array, index + 1, array, index, size() - index - 1);
+        System.arraycopy(array, index + 1, array, index, size - index - 1);
         size--;
         return result;
-    }
-
-    private void extend() {
-        T[] newArray = createArray(allocatedSize() + arrayIncrementValue());
-        System.arraycopy(array, 0, newArray, 0, size());
-        array = newArray;
     }
 
     @SuppressWarnings("unchecked")
