@@ -65,10 +65,10 @@ abstract class AbstractLinearArray<T> implements IArray<T> {
 
     @Override
     public T remove(int index) {
-        T result = get(index);
+        T removed = get(index);
         System.arraycopy(array, index + 1, array, index, size - index - 1);
         size--;
-        return result;
+        return removed;
     }
 
     @SuppressWarnings("unchecked")

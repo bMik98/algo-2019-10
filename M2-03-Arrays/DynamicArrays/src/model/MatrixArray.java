@@ -35,16 +35,38 @@ public class MatrixArray<T> implements IArray<T> {
 
     @Override
     public T get(int index) {
+        if (index < 0 || index > size - 1) {
+            throw new ArrayIndexOutOfBoundsException(index);
+        }
         return array.get(index / vector).get(index % vector);
     }
 
     @Override
     public void add(T item, int index) {
-
+        if (index < 0 || index > size) {
+            throw new ArrayIndexOutOfBoundsException(index);
+        } else if (index == size) {
+            add(item);
+        } else {
+            array.get(index / vector).add(item, index % vector);
+        }
     }
 
     @Override
     public T remove(int index) {
-        return null;
+        if (index < 0 || index > size - 1) {
+            throw new ArrayIndexOutOfBoundsException(index);
+        }
+        int row = index / vector;
+        T removed = array.get(row).remove(index % vector);
+        for (int i = row; i < array.size() - row - 1; i++) {
+            T shifted = array.get(i + 1).remove(0);
+            array.get(i).add(shifted);
+            if (array.get(i + 1).size() == 0) {
+                array.remove(i + 1);
+            }
+        }
+        size--;
+        return removed;
     }
 }
