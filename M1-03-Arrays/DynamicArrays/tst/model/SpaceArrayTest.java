@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SpaceArrayTest {
 
-    private static final int VECTOR = 10;
+    private static final int VECTOR = 16;
 
     private IArray<Integer> array;
 
     @BeforeEach
     void setUp() {
-        array = new SpaceArray<>(VECTOR);
+        array = new SpaceArray<>(VECTOR, 75);
     }
 
     @Test
