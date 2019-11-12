@@ -50,9 +50,25 @@ public class SpaceArray<T> implements IArray<T> {
             add(item);
         } else {
             ItemCell itemCell = getRealLocation(index);
+            if(array.get(itemCell.getRow()).size()>=vector) {
+                splitRow(itemCell.getRow());
+                add(item,index);
+            }
             array.get(itemCell.getRow()).add(item, itemCell.getCol());
             size++;
         }
+    }
+
+    private void splitRow(int row) {
+        int startCol = vector / 2;
+        IArray<T> newRow = new VectorArray<>(vector);
+        for (int i = startCol; i < array.get(row).size(); i++) {
+            newRow.add(array.get(row).get(i));
+        }
+        for (int i = array.get(row).size() - 1; i >= startCol ; i--) {
+            array.get(row).remove(i);
+        }
+        array.add(newRow, row+1);
     }
 
     @Override
