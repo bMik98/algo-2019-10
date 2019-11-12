@@ -1,20 +1,23 @@
-import model.FactorArray;
-import model.IArray;
-import model.MatrixArray;
-import model.SingleArray;
+import model.*;
 
 public class Program {
 
+    private static final int TRIES = 100_000;
+
     public static void main(String[] args) {
         IArray<Integer> singleArray = new SingleArray<>();
-        IArray vectorArray = new FactorArray();
-        IArray factorArray = new FactorArray();
-        IArray matrixArray = new MatrixArray();
-        testAddArray(singleArray, 10_000);
-        testAddArray(vectorArray, 100_000);
-        testAddArray(factorArray, 100_000);
-        testAddArray(matrixArray, 100_000);
-        testDelArray(singleArray, 30);
+        IArray<Integer> vectorArray = new FactorArray<>();
+        IArray<Integer> factorArray = new FactorArray<>();
+        IArray<Integer> matrixArray = new MatrixArray<>();
+        IArray<Integer> linkedArray = new LinkedArray<>();
+        IArray<Integer> spaceArray = new SpaceArray<>();
+
+        testAddArray(singleArray, TRIES);
+        testAddArray(vectorArray, TRIES);
+        testAddArray(factorArray, TRIES);
+        testAddArray(matrixArray, TRIES);
+        testAddArray(linkedArray, TRIES);
+        testAddArray(spaceArray, TRIES);
     }
 
     private static void testAddArray(IArray<Integer> data, int total) {
