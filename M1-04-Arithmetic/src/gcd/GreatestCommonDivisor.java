@@ -2,11 +2,27 @@ package gcd;
 
 public class GreatestCommonDivisor {
 
+    private static final int REPEATS = 1_000_000;
+
     public static void main(String[] args) {
-        bySubtraction(1234567890L, 12, 100);
-        byReminder(1234567890L, 12, 1000000);
-        byShift(1234567890L, 12, 1000000);
-        byShiftRec(1234567890L, 12, 1000000);
+        doTest(12, 1_234_567_890, 100, REPEATS);
+        doTest(1_234_567_890, 12, 100, REPEATS);
+        doTest(15, 20, REPEATS);
+        doTest(20, 15, REPEATS);
+        doTest(112345687L * 33, 142151454L * 33, REPEATS);
+        doTest(1_500_000_000, 2_000_000_000, REPEATS);
+    }
+
+    private static void doTest(long a, long b, int repeats) {
+        doTest(a, b, repeats, repeats);
+    }
+
+    private static void doTest(long a, long b, int subtractionRepeats, int repeats) {
+        System.out.println("-------------------");
+        bySubtraction(a, b, subtractionRepeats);
+        byReminder(a, b, repeats);
+        byShift(a, b, repeats);
+        byShiftRec(a, b, repeats);
     }
 
     private static void bySubtraction(long a, long b, int times) {
@@ -52,6 +68,4 @@ public class GreatestCommonDivisor {
         System.out.printf("GCD by recursive binary shift of %d and %d is %d, executed %d times for: %d ms%n",
                 a, b, result, times, finish - start);
     }
-
-
 }
