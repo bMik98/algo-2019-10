@@ -49,7 +49,8 @@ public class MatrixArray<T> implements IArray<T> {
     public void add(T item, int index) {
         if (index < 0 || index > size) {
             throw new ArrayIndexOutOfBoundsException(index);
-        } else if (index == size) {
+        }
+        if (index == size) {
             add(item);
         } else if (size < vector) {
             array.get(index / vector).add(item, index % vector);
@@ -88,17 +89,21 @@ public class MatrixArray<T> implements IArray<T> {
 
     @Override
     public T remove(int index) {
-        if (index < 0 || index > size - 1) {
+        if (index < 0 || index >= size) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
         int row = index / vector;
         T removed = array.get(row).remove(index % vector);
-        for (int i = row; i < array.size() - 1; i++) {
+        int lastRow = array.size() -1;
+        for (int i = row; i < lastRow; i++) {
             T leftShifted = array.get(i + 1).remove(0);
             array.get(i).add(leftShifted);
             if (array.get(i + 1).size() == 0) {
                 array.remove(i + 1);
             }
+        }
+        if (array.get(row).size() == 0) {
+            array.remove(row);
         }
         size--;
         return removed;

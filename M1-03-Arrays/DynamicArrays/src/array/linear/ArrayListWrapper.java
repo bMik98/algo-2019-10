@@ -4,7 +4,7 @@ import array.IArray;
 
 import java.util.ArrayList;
 
-public class ArrayListArray<T> implements IArray<T> {
+public class ArrayListWrapper<T> implements IArray<T> {
 
     private ArrayList<T> array = new ArrayList<>();
 

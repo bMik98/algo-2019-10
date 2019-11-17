@@ -27,12 +27,12 @@ public class LinkedArray<T> implements IArray<T> {
 
     @Override
     public void add(T item, int index) {
-        if (index < 0 || index > size) {
-            throw new ArrayIndexOutOfBoundsException(index);
-        }
-        if (isEmpty() || index == size) {
+        if (index == size) {
             add(item);
-        } else if (index == 0) {
+            return;
+        }
+        checkItemIndex(index);
+        if (index == 0) {
             head = new Node<>(item, head);
             size++;
         } else {
@@ -45,23 +45,18 @@ public class LinkedArray<T> implements IArray<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0 || index >= size) {
-            throw new ArrayIndexOutOfBoundsException(index);
-        }
         return getNode(index).getItem();
     }
 
     @Override
     public T remove(int index) {
-        if (index < 0 || index >= size) {
-            throw new ArrayIndexOutOfBoundsException(index);
-        }
+        checkItemIndex(index);
         T deletedItem;
         if (index == 0) {
             deletedItem = head.getItem();
             head = head.getNext();
         } else {
-            Node<T> previous = getNode(index - 1);
+            Node<T> previous = node(index - 1);
             Node<T> nodeToRemove = previous.getNext();
             previous.setNext(nodeToRemove.getNext());
             deletedItem = nodeToRemove.getItem();
@@ -70,18 +65,31 @@ public class LinkedArray<T> implements IArray<T> {
         return deletedItem;
     }
 
-    private boolean isEmpty() {
-        return head == null;
+    public Node<T> getNode(int index) {
+        checkItemIndex(index);
+        return node(index);
     }
 
-    private Node<T> getNode(int index) {
+    private Node<T> node(int index) {
+        Node<T> result;
         if (index == size - 1) {
-            return tail;
-        }
-        Node<T> result = head;
-        for (int i = 0; i < index; i++) {
-            result = result.getNext();
+            result = tail;
+        } else {
+            result = head;
+            for (int i = 0; i < index; i++) {
+                result = result.getNext();
+            }
         }
         return result;
+    }
+
+    private void checkItemIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new ArrayIndexOutOfBoundsException(index);
+        }
+    }
+
+    private boolean isEmpty() {
+        return head == null;
     }
 }

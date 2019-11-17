@@ -1,6 +1,7 @@
 package array.matrix;
 
 import array.IArray;
+import array.linear.FactorArray;
 import array.linear.VectorArray;
 import array.sequent.LinkedArray;
 
@@ -18,7 +19,7 @@ public class SpaceArray<T> implements IArray<T> {
         this.vector = (vector > 0) ? vector : DEFAULT_VECTOR;
         int factor = (fillPercents > 0 && fillPercents <= 100) ? fillPercents : DEFAULT_FACTOR;
         fillLimit = vector * factor / 100;
-        array = new LinkedArray<>();
+        array = new FactorArray<>();
         size = 0;
     }
 
