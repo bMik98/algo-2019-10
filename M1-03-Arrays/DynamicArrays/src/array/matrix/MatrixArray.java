@@ -12,14 +12,14 @@ public class MatrixArray<T> implements IArray<T> {
     private int vector;
     private IArray<IArray<T>> array;
 
+    public MatrixArray() {
+        this(DEFAULT_VECTOR);
+    }
+
     public MatrixArray(int vector) {
         this.vector = vector;
         array = new SingleArray<>();
         size = 0;
-    }
-
-    public MatrixArray() {
-        this(DEFAULT_VECTOR);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class Queue<T> {
 
     public void enqueue(T item) {
         Node<T> node = new Node<>(item);
-        if(isEmpty()) {
+        if (isEmpty()) {
             head = node;
         } else {
             tail.setNext(node);
@@ -30,7 +30,7 @@ public class Queue<T> {
     }
 
     public T dequeue() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
         T item = head.getItem();

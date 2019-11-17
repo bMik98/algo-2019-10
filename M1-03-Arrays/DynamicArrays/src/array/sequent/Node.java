@@ -1,6 +1,6 @@
 package array.sequent;
 
-class Node<T> {
+public class Node<T> {
 
     private final T item;
     private Node<T> next;
@@ -14,7 +14,7 @@ class Node<T> {
         this.next = next;
     }
 
-    T getItem() {
+    public T getItem() {
         return item;
     }
 

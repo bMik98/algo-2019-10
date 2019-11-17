@@ -1,8 +1,8 @@
 package array.matrix;
 
 import array.IArray;
-import array.sequent.LinkedArray;
 import array.linear.VectorArray;
+import array.sequent.LinkedArray;
 
 public class SpaceArray<T> implements IArray<T> {
 
