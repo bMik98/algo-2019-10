@@ -1,4 +1,4 @@
-package model;
+package array.sequent;
 
 class Node<T> {
 

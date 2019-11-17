@@ -1,4 +1,4 @@
-package model;
+package array.linear;
 
 public class SingleArray<T> extends AbstractLinearArray<T> {
 
@@ -11,7 +11,7 @@ public class SingleArray<T> extends AbstractLinearArray<T> {
     }
 
     @Override
-    protected int arrayIncrementValue() {
+    protected int getArrayIncrementValue() {
         return 1;
     }
 }

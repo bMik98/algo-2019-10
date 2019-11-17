@@ -1,4 +1,8 @@
-package model;
+package array.matrix;
+
+import array.IArray;
+import array.linear.SingleArray;
+import array.linear.VectorArray;
 
 public class MatrixArray<T> implements IArray<T> {
 
@@ -8,7 +12,6 @@ public class MatrixArray<T> implements IArray<T> {
     private int vector;
     private IArray<IArray<T>> array;
 
-    @SuppressWarnings("WeakerAccess")
     public MatrixArray(int vector) {
         this.vector = vector;
         array = new SingleArray<>();

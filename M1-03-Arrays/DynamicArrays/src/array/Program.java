@@ -1,4 +1,10 @@
-import model.*;
+package array;
+
+import array.linear.FactorArray;
+import array.linear.SingleArray;
+import array.matrix.MatrixArray;
+import array.matrix.SpaceArray;
+import array.sequent.LinkedArray;
 
 public class Program {
 

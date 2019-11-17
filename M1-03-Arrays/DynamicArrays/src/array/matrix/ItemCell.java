@@ -1,4 +1,4 @@
-package model;
+package array.matrix;
 
 class ItemCell {
     private final int row;

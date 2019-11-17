@@ -1,4 +1,6 @@
-package model;
+package array.linear;
+
+import array.IArray;
 
 abstract class AbstractLinearArray<T> implements IArray<T> {
 
@@ -7,14 +9,11 @@ abstract class AbstractLinearArray<T> implements IArray<T> {
     private T[] array;
     private int size;
 
-    @SuppressWarnings("WeakerAccess")
-    public AbstractLinearArray() {
-        this.size = INITIAL_SIZE;
-        this.array = createArray(INITIAL_SIZE);
+    AbstractLinearArray() {
+        this(INITIAL_SIZE);
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public AbstractLinearArray(int size) {
+    AbstractLinearArray(int size) {
         this.size = size;
         this.array = createArray(size);
     }
@@ -27,7 +26,7 @@ abstract class AbstractLinearArray<T> implements IArray<T> {
     @Override
     public void add(T item) {
         if (array.length == size) {
-            T[] newArray = createArray(allocatedSize() + arrayIncrementValue());
+            T[] newArray = createArray(allocatedSize() + getArrayIncrementValue());
             System.arraycopy(array, 0, newArray, 0, size);
             array = newArray;
         }
@@ -43,7 +42,7 @@ abstract class AbstractLinearArray<T> implements IArray<T> {
             add(item);
         } else {
             if (array.length == size) {
-                T[] newArray = createArray(allocatedSize() + arrayIncrementValue());
+                T[] newArray = createArray(allocatedSize() + getArrayIncrementValue());
                 System.arraycopy(array, 0, newArray, 0, index);
                 System.arraycopy(array, index, newArray, index + 1, size - index);
                 array = newArray;
@@ -76,10 +75,9 @@ abstract class AbstractLinearArray<T> implements IArray<T> {
         return (T[]) new Object[size];
     }
 
-    @SuppressWarnings("WeakerAccess")
-    protected int allocatedSize() {
+    int allocatedSize() {
         return array.length;
     }
 
-    protected abstract int arrayIncrementValue();
+    protected abstract int getArrayIncrementValue();
 }

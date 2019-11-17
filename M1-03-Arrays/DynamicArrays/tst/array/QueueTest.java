@@ -1,5 +1,7 @@
-package model;
+package array;
 
+import array.sequent.Node;
+import array.sequent.Queue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

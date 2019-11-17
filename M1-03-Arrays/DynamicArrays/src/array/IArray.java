@@ -1,4 +1,4 @@
-package model;
+package array;
 
 public interface IArray<T> {
 

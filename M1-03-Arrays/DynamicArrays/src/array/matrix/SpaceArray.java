@@ -1,4 +1,8 @@
-package model;
+package array.matrix;
+
+import array.IArray;
+import array.sequent.LinkedArray;
+import array.linear.VectorArray;
 
 public class SpaceArray<T> implements IArray<T> {
 
@@ -10,7 +14,6 @@ public class SpaceArray<T> implements IArray<T> {
     private IArray<IArray<T>> array;
     private int size;
 
-    @SuppressWarnings("WeakerAccess")
     public SpaceArray(int vector, int fillPercents) {
         this.vector = (vector > 0) ? vector : DEFAULT_VECTOR;
         int factor = (fillPercents > 0 && fillPercents <= 100) ? fillPercents : DEFAULT_FACTOR;
@@ -19,7 +22,6 @@ public class SpaceArray<T> implements IArray<T> {
         size = 0;
     }
 
-    @SuppressWarnings("WeakerAccess")
     public SpaceArray() {
         this(DEFAULT_VECTOR, DEFAULT_FACTOR);
     }

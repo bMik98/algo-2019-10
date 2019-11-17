@@ -1,17 +1,26 @@
-package model;
+package array;
 
+import array.matrix.MatrixArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LinkedArrayTest {
+class MatrixArrayTest {
+
+    private static final int VECTOR = 10;
 
     private IArray<Integer> array;
 
     @BeforeEach
     void setUp() {
-        array = new LinkedArray<>();
+        array = new MatrixArray<>(VECTOR);
+    }
+
+    @Test
+    void defaultConstructor() {
+        array = new MatrixArray<>();
+        assertEquals(0, array.size());
     }
 
     @Test
@@ -33,7 +42,7 @@ class LinkedArrayTest {
 
     @Test
     void addAndRemoveNumberOfValues() {
-        final int NUMBER_OF_VALUES = 100;
+        final int NUMBER_OF_VALUES = 1000;
         assertEquals(0, array.size());
         for (int i = 0; i < NUMBER_OF_VALUES; i++) {
             array.add(i);
@@ -73,18 +82,7 @@ class LinkedArrayTest {
     }
 
     @Test
-    void addToTail() {
-        final int FIRST_VALUE = 999991;
-        array.add(FIRST_VALUE);
-        final int LAST_VALUE = 112;
-        array.add(LAST_VALUE, array.size());
-        assertEquals(2, array.size());
-        assertEquals(FIRST_VALUE, array.get(0));
-        assertEquals(LAST_VALUE, array.get(1));
-    }
-
-    @Test
-    void addToMiddle() {
+    void insertIntoArrayWithIncompleteSingleRow() {
         final int FIRST_VALUE = 999991;
         array.add(FIRST_VALUE);
         final int LAST_VALUE = 999992;
@@ -98,6 +96,67 @@ class LinkedArrayTest {
         assertEquals(ADDED_VALUE_2, array.get(1));
         assertEquals(ADDED_VALUE_1, array.get(2));
         assertEquals(LAST_VALUE, array.get(3));
+    }
+
+    @Test
+    void insertIntoArrayWithFullSingleRow() {
+        for (int i = 0; i < VECTOR; i++) {
+            array.add(i);
+        }
+        assertEquals(VECTOR, array.size());
+        final int VALUE = 999991;
+        final int INDEX = VECTOR / 2;
+        array.add(VALUE, INDEX);
+        assertEquals(VECTOR + 1, array.size());
+        for (int i = 0; i < INDEX; i++) {
+            assertEquals(i, array.get(i));
+        }
+        assertEquals(VALUE, array.get(INDEX));
+        for (int i = INDEX + 1; i < array.size(); i++) {
+            assertEquals(i - 1, array.get(i));
+        }
+    }
+
+    @Test
+    void insertIntoMultiRowArrayWithFullLastRow() {
+        final int NUMBER_OF_ROWS = 6;
+        final int SIZE = VECTOR * NUMBER_OF_ROWS;
+        for (int i = 0; i < SIZE; i++) {
+            array.add(i);
+        }
+        assertEquals(SIZE, array.size());
+        final int VALUE = 999991;
+        final int INDEX = (VECTOR * NUMBER_OF_ROWS / 2) + (VECTOR / 2);
+        array.add(VALUE, INDEX);
+        assertEquals(SIZE + 1, array.size());
+        for (int i = 0; i < INDEX; i++) {
+            assertEquals(i, array.get(i));
+        }
+        assertEquals(VALUE, array.get(INDEX));
+        for (int i = INDEX + 1; i < array.size(); i++) {
+            assertEquals(i - 1, array.get(i));
+        }
+    }
+
+    @Test
+    void insertIntoMultiRowArrayWithIncompleteLastRow() {
+        final int NUMBER_OF_ROWS = 6;
+        final int SIZE = VECTOR * NUMBER_OF_ROWS + (VECTOR / 2);
+        for (int i = 0; i < SIZE; i++) {
+            array.add(i);
+        }
+        assertEquals(SIZE, array.size());
+        final int VALUE = 999991;
+        final int INDEX = (VECTOR * NUMBER_OF_ROWS / 2) + (VECTOR / 2);
+        array.add(VALUE, INDEX);
+        assertEquals(SIZE + 1, array.size());
+        for (int i = 0; i < INDEX; i++) {
+            assertEquals(i, array.get(i));
+        }
+        assertEquals(VALUE, array.get(INDEX));
+        for (int i = INDEX + 1; i < array.size(); i++) {
+            assertEquals(i - 1, array.get(i));
+        }
     }
 
     @Test
@@ -119,17 +178,6 @@ class LinkedArrayTest {
         Exception exception = assertThrows(ArrayIndexOutOfBoundsException.class, () ->
                 array.get(-1));
         assertTrue(exception.getMessage().endsWith(": -1"));
-    }
-
-    @Test
-    void removeFromTheMiddle() {
-        for (int i = 0; i < 3; i++) {
-            array.add(i);
-        }
-        array.remove(1);
-        assertEquals(2, array.size());
-        assertEquals(0, array.get(0));
-        assertEquals(2, array.get(1));
     }
 
     @Test

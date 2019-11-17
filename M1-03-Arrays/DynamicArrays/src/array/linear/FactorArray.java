@@ -1,4 +1,4 @@
-package model;
+package array.linear;
 
 public class FactorArray<T> extends AbstractLinearArray<T> {
 
@@ -18,7 +18,7 @@ public class FactorArray<T> extends AbstractLinearArray<T> {
     }
 
     @Override
-    protected int arrayIncrementValue() {
+    protected int getArrayIncrementValue() {
         return allocatedSize() * factor / 100 + 1;
     }
 }

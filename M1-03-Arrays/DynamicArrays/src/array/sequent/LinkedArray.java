@@ -1,4 +1,6 @@
-package model;
+package array.sequent;
+
+import array.IArray;
 
 public class LinkedArray<T> implements IArray<T> {
 

@@ -1,5 +1,6 @@
-package model;
+package array;
 
+import array.linear.SingleArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

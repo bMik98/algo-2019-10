@@ -1,4 +1,4 @@
-package model;
+package array.sequent;
 
 public class Queue<T> {
 
