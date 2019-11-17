@@ -30,11 +30,11 @@ public class LinkedArray<T> implements IArray<T> {
         if (index < 0 || index > size) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
-        if (index == 0) {
+        if (isEmpty() || index == size) {
+            add(item);
+        } else if (index == 0) {
             head = new Node<>(item, head);
             size++;
-        } else if (index == size) {
-            add(item);
         } else {
             Node<T> previousNode = getNode(index - 1);
             Node<T> nodeToAdd = new Node<>(item, previousNode.getNext());
@@ -75,6 +75,9 @@ public class LinkedArray<T> implements IArray<T> {
     }
 
     private Node<T> getNode(int index) {
+        if (index == size - 1) {
+            return tail;
+        }
         Node<T> result = head;
         for (int i = 0; i < index; i++) {
             result = result.getNext();

@@ -122,6 +122,7 @@ class SpaceArrayTest {
         final int NUMBER_OF_ROWS = 6;
         final int SIZE = VECTOR * NUMBER_OF_ROWS;
         for (int i = 0; i < SIZE; i++) {
+            System.out.println(i);
             array.add(i);
         }
         assertEquals(SIZE, array.size());

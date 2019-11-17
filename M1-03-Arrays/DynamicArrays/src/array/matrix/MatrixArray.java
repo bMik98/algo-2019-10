@@ -1,6 +1,7 @@
 package array.matrix;
 
 import array.IArray;
+import array.linear.FactorArray;
 import array.linear.SingleArray;
 import array.linear.VectorArray;
 
@@ -18,7 +19,7 @@ public class MatrixArray<T> implements IArray<T> {
 
     public MatrixArray(int vector) {
         this.vector = vector;
-        array = new SingleArray<>();
+        array = new FactorArray<>();
         size = 0;
     }
 

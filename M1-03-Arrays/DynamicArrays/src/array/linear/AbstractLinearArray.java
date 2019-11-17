@@ -2,6 +2,8 @@ package array.linear;
 
 import array.IArray;
 
+import java.util.Arrays;
+
 abstract class AbstractLinearArray<T> implements IArray<T> {
 
     private static final int INITIAL_SIZE = 0;
@@ -26,9 +28,8 @@ abstract class AbstractLinearArray<T> implements IArray<T> {
     @Override
     public void add(T item) {
         if (array.length == size) {
-            T[] newArray = createArray(allocatedSize() + getArrayIncrementValue());
-            System.arraycopy(array, 0, newArray, 0, size);
-            array = newArray;
+            int newSize = allocatedSize() + getArrayIncrementValue();
+            array = Arrays.copyOf(array, newSize);
         }
         array[size] = item;
         size++;
