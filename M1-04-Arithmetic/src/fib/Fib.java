@@ -78,4 +78,17 @@ public class Fib {
         }
         return r0;
     }
+
+    public static long cutieMatrix(int n) {
+        Matrix2x2 a = new Matrix2x2(1, 1, 1, 0);
+        Matrix1x2 r = new Matrix1x2(0, 1);
+        while (n > 0) {
+            if ((n & 1) == 1) {
+                r = r.multiply(a);
+            }
+            a = a.square();
+            n >>= 1;
+        }
+        return r.get(0);
+    }
 }

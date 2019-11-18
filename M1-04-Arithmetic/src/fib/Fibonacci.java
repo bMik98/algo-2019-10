@@ -5,13 +5,14 @@ import java.math.BigInteger;
 public class Fibonacci {
 
     public static void main(String[] args) {
+        testByRecursion(45);
         final int N = 92;
         final int TRIES = 1_000_000;
-        testByRecursion(45);
         testByIteration(N, TRIES);
         testByUnlimitedIteration(N, TRIES);
         testByBinetsFormula(N, TRIES);
         testByMatrix(N, TRIES);
+        testByCutieMatrix(N, TRIES);
     }
 
     private static void testByRecursion(int n) {
@@ -62,7 +63,18 @@ public class Fibonacci {
             result = Fib.matrix(n);
         }
         long finish = System.currentTimeMillis();
-        System.out.printf("Fibonacci by matrix of %d  is %d, executed for: %d ms%n",
+        System.out.printf("Fibonacci by matrix of %d is %d, executed for: %d ms%n",
+                n, result, finish - start);
+    }
+
+    private static void testByCutieMatrix(int n, int tries) {
+        long start = System.currentTimeMillis();
+        long result = 0;
+        for (int i = 0; i < tries; i++) {
+            result = Fib.cutieMatrix(n);
+        }
+        long finish = System.currentTimeMillis();
+        System.out.printf("Fibonacci by matrix ver.2 of %d is %d, executed for: %d ms%n",
                 n, result, finish - start);
     }
 }
