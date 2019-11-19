@@ -1,80 +1,50 @@
 package fib;
 
 import java.math.BigInteger;
+import java.util.function.IntFunction;
+import java.util.function.IntToLongFunction;
 
 public class Fibonacci {
 
+    private static IntToLongFunction byRecursion = n -> Fib.recursion(n);
+    private static IntToLongFunction byIteration = n -> Fib.iteration(n);
+    private static IntToLongFunction byBinet = n -> Fib.binet(n);
+    private static IntToLongFunction byMatrix = n -> Fib.matrix(n);
+    private static IntToLongFunction byCutieMatrix = n -> Fib.cutieMatrix(n);
+
+    private static IntFunction<BigInteger> byIterationUnlimited = n -> Fib.unlimitedIteration(n);
+
     public static void main(String[] args) {
-        testByRecursion(45);
+        test(byRecursion, 45, 1, "recursion");
         final int N = 92;
         final int TRIES = 1_000_000;
-        testByIteration(N, TRIES);
-        testByUnlimitedIteration(N, TRIES);
-        testByBinetsFormula(N, TRIES);
-        testByMatrix(N, TRIES);
-        testByCutieMatrix(N, TRIES);
+        test(byIteration, N, TRIES, "iteration");
+        test(byBinet, N, TRIES, "Binet's formula");
+        test(byMatrix, N, TRIES, "matrix");
+        test(byCutieMatrix, N, TRIES, "matrix ver.2");
+
+        test(byIterationUnlimited, N, TRIES, "unlimited iteration");
     }
 
-    private static void testByRecursion(int n) {
-        long start = System.currentTimeMillis();
-        long result = Fib.recursion(n);
-        long finish = System.currentTimeMillis();
-        System.out.printf("Fibonacci by recursion of %d is %d, executed for: %d ms%n",
-                n, result, finish - start);
-    }
-
-    private static void testByIteration(int n, int tries) {
-        long start = System.currentTimeMillis();
+    private static void test(IntToLongFunction function, int n, int tries, String algorithmName) {
         long result = 0;
+        long start = System.currentTimeMillis();
         for (int i = 0; i < tries; i++) {
-            result = Fib.iteration(n);
+            result = function.applyAsLong(n);
         }
         long finish = System.currentTimeMillis();
-        System.out.printf("Fibonacci by iteration of %d is %d, executed for: %d ms%n",
-                n, result, finish - start);
+        System.out.printf("Fibonacci by %-20s of %d is %d, executed: %d times for: %d ms%n",
+                algorithmName, n, result, tries, finish - start);
     }
 
-    private static void testByUnlimitedIteration(int n, int tries) {
+    private static void test(IntFunction<BigInteger> function, int n, int tries, String algorithmName) {
         long start = System.currentTimeMillis();
         BigInteger result = BigInteger.valueOf(0);
         for (int i = 0; i < tries; i++) {
-            result = Fib.unlimitedIteration(n);
+            result = function.apply(n);
         }
         long finish = System.currentTimeMillis();
-        System.out.printf("Fibonacci by unlimited iterations of %d is %s, executed for: %d ms%n",
-                n, result.toString(), finish - start);
-    }
-
-    private static void testByBinetsFormula(int n, int tries) {
-        long start = System.currentTimeMillis();
-        long result = 0;
-        for (int i = 0; i < tries; i++) {
-            result = Fib.binet(n);
-        }
-        long finish = System.currentTimeMillis();
-        System.out.printf("Fibonacci by Binet's formula of %d is %d, executed for: %d ms%n",
-                n, result, finish - start);
-    }
-
-    private static void testByMatrix(int n, int tries) {
-        long start = System.currentTimeMillis();
-        long result = 0;
-        for (int i = 0; i < tries; i++) {
-            result = Fib.matrix(n);
-        }
-        long finish = System.currentTimeMillis();
-        System.out.printf("Fibonacci by matrix of %d is %d, executed for: %d ms%n",
-                n, result, finish - start);
-    }
-
-    private static void testByCutieMatrix(int n, int tries) {
-        long start = System.currentTimeMillis();
-        long result = 0;
-        for (int i = 0; i < tries; i++) {
-            result = Fib.cutieMatrix(n);
-        }
-        long finish = System.currentTimeMillis();
-        System.out.printf("Fibonacci by matrix ver.2 of %d is %d, executed for: %d ms%n",
-                n, result, finish - start);
+        System.out.printf("Fibonacci by %-20s of %d is %s, executed: %d times for: %d ms%n",
+                algorithmName, n, result.toString(), tries, finish - start);
     }
 }
