@@ -1,0 +1,51 @@
+; Bubble sorting
+;
+; <input> N a0 a1 a2 a3 .. aN-1
+;
+; r1 - reminder (descending accumulator)
+; r2 - divisor (value to substruct)
+; r3 - quotent (counter of substructions)
+;
+;Протестировать работу на следующих данных:
+;а. 50 / 30 = 1 и 20
+;б. 25 / 25 = 1 и 0
+;в. 5 / 30 = 0 и 5
+;г. 100001 / 2 = 50000 и 1
+;д. 0 / 123456 = 0 и 0
+;е. 123456 / 0 = нет ответа (выход пустой, программа остановлена)
+;
+;Custom tests
+; 0 / 0 = empty output
+; 0 / 1 = 0
+; 1 / 1 = 1
+; 50 / 1 = 50
+;
+
+
+<input> 5 110 12 17 1 2
+
+read 0
+jz stop 
+
+store 1
+store 2
+load =10
+store 3
+
+read_next: 
+	read *3
+
+	load 3
+	add =1
+	store 3
+
+	load 2
+	sub =1
+	store 2
+jgtz read_next
+
+
+
+
+stop:
+halt
