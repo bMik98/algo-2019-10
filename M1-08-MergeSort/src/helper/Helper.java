@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.function.Consumer;
+import java.util.function.IntConsumer;
 
 public class Helper {
 
@@ -20,19 +22,38 @@ public class Helper {
         }
     }
 
-    public static void assertThatFileIsSorted(String fileSpec) throws IOException {
-        Path path = Paths.get(fileSpec);
+    public static void assertThatFileArrayIsSorted(String fileArraySpec) {
+        Path path = Paths.get(fileArraySpec);
+        long size = path.toFile().length() / 2;
         try (DataInputStream in = new DataInputStream(new BufferedInputStream(Files.newInputStream(path)))) {
-            int a = in.readUnsignedShort();
-            long pos = 0;
-            while (in.available() > 0) {
-                int b = in.readUnsignedShort();
-                pos++;
-                if (a > b) {
-                    throw new IndexOutOfBoundsException("File Array not sorted at position: " + pos);
+            int previous = in.readUnsignedShort();
+            for (int i = 1; i < size; i++) {
+                int current = in.readUnsignedShort();
+                if (previous > current) {
+                    throw new IndexOutOfBoundsException("File Array not sorted at position: " + i);
                 }
-                a = b;
+                previous = current;
             }
+        } catch (IOException e) {
+            throw new ExecutionRuntimeException(e.getMessage());
         }
+    }
+
+    public static long runAndMeasure(IntConsumer method, int size) {
+        long start = System.currentTimeMillis();
+        method.accept(size);
+        return System.currentTimeMillis() - start;
+    }
+
+    public static long runAndMeasure(Consumer<String> method, String name) {
+        long start = System.currentTimeMillis();
+        method.accept(name);
+        return System.currentTimeMillis() - start;
+    }
+
+    public static long runAndMeasure(Consumer<int[]> method, int[] array) {
+        long start = System.currentTimeMillis();
+        method.accept(array);
+        return System.currentTimeMillis() - start;
     }
 }

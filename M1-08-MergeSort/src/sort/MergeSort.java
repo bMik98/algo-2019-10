@@ -2,7 +2,7 @@ package sort;
 
 public class MergeSort {
 
-    private static final int TIM_THRESHOLD = 32;
+    private static final int DEFAULT_TIM_THRESHOLD = 32;
 
     private MergeSort() {
     }
@@ -21,7 +21,7 @@ public class MergeSort {
     }
 
     public static void timSort(int[] array) {
-        timSort(array, 0, array.length - 1, TIM_THRESHOLD);
+        timSort(array, 0, array.length - 1, DEFAULT_TIM_THRESHOLD);
     }
 
     public static void timSort(int[] array, int threshold) {
@@ -60,7 +60,7 @@ public class MergeSort {
         System.arraycopy(result, 0, array, left, right - left + 1);
     }
 
-    public static void shellSort(int[] arr, int left, int right) {
+    private static void shellSort(int[] arr, int left, int right) {
         int length = right - left + 1;
         for (int gap = length / 2; gap > 0; gap /= 2) {
             for (int i = left; i + gap <= right; i++) {
@@ -74,5 +74,4 @@ public class MergeSort {
             }
         }
     }
-
 }
