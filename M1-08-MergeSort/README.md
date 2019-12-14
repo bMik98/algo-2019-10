@@ -1,6 +1,6 @@
-#8. MergeSort, TimSort
+# 8. MergeSort, TimSort
 
-##8.1 Creating a large file array of unsigned shorts
+## 8.1 Creating a large file array of unsigned shorts
 
 | Array size, numbers |  File length, bytes |   Elapsed time, ms  |
 |--------------------:|--------------------:|--------------------:|
@@ -9,7 +9,7 @@
 |         100 000 000 |         200 000 000 |               4 075 |
 |       1 000 000 000 |       2 000 000 000 |              15 780 |
 
-##8.2 External sorting a file array 
+## 8.2 External sorting a file array 
 
 | Name                | Array size, numbers |   Elapsed time, ms  |
 |-------------------- |--------------------:|--------------------:|
@@ -20,7 +20,7 @@
 |  External MergeSort |       1 000 000 000 |             310 141 |
 |    External TimSort |       1 000 000 000 |             287 385 |
 
-##8.3 Comparison between in-memory methods MergeSort and TimSort (32..1024), ms
+## 8.3 Comparison between in-memory methods MergeSort and TimSort (32..1024), ms
 
 | Array size, numbers | Merge  | Tim-32 | Tim-64 | Tim-128| Tim-256| Tim-512|Tim-1024|
 |--------------------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
