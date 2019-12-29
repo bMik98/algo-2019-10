@@ -1,8 +1,8 @@
-# 13. Linear and Quadratic Hash
+# 13-15. Hash Tables
 
-LinearHTable - Linear open addressing hash table
-QuadraticHTable - Quadratic open addressing hash table.
+| Class                | Description                          |  
+|----------------------|--------------------------------------|
+| LinearHTable         | Linear open addressing hash table    |  
+| QuadraticHTable      | Quadratic open addressing hash table | 
+| DoubleHashingHTable  | Double hashing hash table            | 
 
-# 14. Double Hash
-
-DoubleHashingHTable - Double hashing hash table
