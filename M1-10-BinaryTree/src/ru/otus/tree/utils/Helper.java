@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 
@@ -40,21 +41,15 @@ public class Helper {
         }
     }
 
-    public static long runAndMeasure(IntConsumer method, int size) {
+    public static <T> long runAndMeasure(Consumer<T> method, T t) {
         long start = System.currentTimeMillis();
-        method.accept(size);
+        method.accept(t);
         return System.currentTimeMillis() - start;
     }
 
-    public static long runAndMeasure(Consumer<String> method, String name) {
+    public static <T, U> long runAndMeasure(BiConsumer<T, U> method, T t, U u) {
         long start = System.currentTimeMillis();
-        method.accept(name);
-        return System.currentTimeMillis() - start;
-    }
-
-    public static long runAndMeasure(Consumer<int[]> method, int[] array) {
-        long start = System.currentTimeMillis();
-        method.accept(array);
+        method.accept(t, u);
         return System.currentTimeMillis() - start;
     }
 
