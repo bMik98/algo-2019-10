@@ -3,7 +3,7 @@ package ru.otus.tree.binary;
 import ru.otus.tree.IntTree;
 
 public class BinaryTree implements IntTree {
-    private IntTreeNode root;
+    protected BinaryTreeNode root;
     private int size;
 
     public BinaryTree() {
@@ -12,7 +12,7 @@ public class BinaryTree implements IntTree {
 
     @Override
     public void insert(int key) {
-        IntTreeNode node = new IntTreeNode(key);
+        BinaryTreeNode node = createNode(key);
         if (root == null) {
             root = node;
             size = 1;
@@ -24,13 +24,17 @@ public class BinaryTree implements IntTree {
         }
     }
 
-    private boolean insert(IntTreeNode start, IntTreeNode node) {
-        IntTreeNode cursor = start;
-        IntTreeNode parent;
+    protected BinaryTreeNode createNode(int key) {
+        return new BinaryTreeNode(key);
+    }
+
+    private boolean insert(BinaryTreeNode start, BinaryTreeNode node) {
+        BinaryTreeNode cursor = start;
+        BinaryTreeNode parent;
         int comparison;
         do {
             parent = cursor;
-            comparison = compare(node, cursor);
+            comparison = compare(node.getKey(), cursor);
             if (comparison < 0) {
                 cursor = cursor.getLeft();
             } else if (comparison > 0) {
@@ -55,13 +59,13 @@ public class BinaryTree implements IntTree {
 
     @Override
     public void remove(int key) {
-        IntTreeNode node = findNode(key);
+        BinaryTreeNode node = findNode(key);
         if (node == null) {
             return;
         }
-        IntTreeNode parent = node.getParent();
-        IntTreeNode left = node.getLeft();
-        IntTreeNode right = node.getRight();
+        BinaryTreeNode parent = node.getParent();
+        BinaryTreeNode left = node.getLeft();
+        BinaryTreeNode right = node.getRight();
         removeNode(node);
         if (parent != null) {
             if (left != null) {
@@ -86,8 +90,8 @@ public class BinaryTree implements IntTree {
         size--;
     }
 
-    private void removeNode(IntTreeNode node) {
-        IntTreeNode parent = node.getParent();
+    private void removeNode(BinaryTreeNode node) {
+        BinaryTreeNode parent = node.getParent();
         if (parent != null) {
             if (parent.getLeft() != null && node.getKey() == parent.getLeft().getKey()) {
                 parent.setLeft(null);
@@ -100,11 +104,10 @@ public class BinaryTree implements IntTree {
         node.setLeft(null);
     }
 
-    private IntTreeNode findNode(int key) {
-        IntTreeNode cursor = root;
-        IntTreeNode nodeToFind = new IntTreeNode(key);
+    private BinaryTreeNode findNode(int key) {
+        BinaryTreeNode cursor = root;
         while (cursor != null) {
-            int comparison = compare(nodeToFind, cursor);
+            int comparison = compare(key, cursor);
             if (comparison < 0) {
                 cursor = cursor.getLeft();
             } else if (comparison > 0) {
@@ -116,11 +119,11 @@ public class BinaryTree implements IntTree {
         return null;
     }
 
-    private int compare(IntTreeNode n1, IntTreeNode n2) {
-        if (n1.getKey() == n2.getKey()) {
+    private int compare(int key, BinaryTreeNode node) {
+        if (key == node.getKey()) {
             return 0;
         }
-        return (n1.getKey() < n2.getKey()) ? -1 : 1;
+        return (key < node.getKey()) ? -1 : 1;
     }
 
     @Override

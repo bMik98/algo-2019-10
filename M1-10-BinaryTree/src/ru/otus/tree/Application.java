@@ -1,5 +1,6 @@
 package ru.otus.tree;
 
+import ru.otus.tree.binary.AVLTree;
 import ru.otus.tree.binary.BinaryTree;
 import ru.otus.tree.utils.Helper;
 
@@ -30,7 +31,7 @@ public class Application {
 
         System.out.println("# 10. Performance of Trees\n");
 
-        int size = 200_000;
+        int size = 50_000;
         int searchQty = size / 10;
         int removeQty = size / 10;
 
@@ -48,6 +49,8 @@ public class Application {
 
         testTree("BinaryTree, sequential init", new BinaryTree(), sequentialKeys, keysToSearch, keysToRemove);
         testTree("BinaryTree, random init", new BinaryTree(), randomKeys, keysToSearch, keysToRemove);
+        testTree("AVLTree, sequential init", new AVLTree(), sequentialKeys, keysToSearch, keysToRemove);
+        testTree("AVLTree, random init", new AVLTree(), randomKeys, keysToSearch, keysToRemove);
     }
 
     private static void testTree(String name, IntTree tree, int[] keysToInsert, int[] keysToSearch, int[] keysToRemove) {
