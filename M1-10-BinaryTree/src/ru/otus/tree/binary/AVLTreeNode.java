@@ -1,19 +1,36 @@
 package ru.otus.tree.binary;
 
-public class AVLTreeNode extends BinaryTreeNode {
+public class AVLTreeNode extends BSTreeNode implements HTreeNode {
 
     private int height;
 
     public AVLTreeNode(int key) {
         super(key);
-        height = 0;
+        this.height = 1;
     }
 
-    public int getHeight() {
-        return height;
+    @Override
+    public HTreeNode parent() {
+        return (HTreeNode) super.parent();
     }
 
-    public void setHeight(int height) {
+    @Override
+    public HTreeNode right() {
+        return (HTreeNode) super.right();
+    }
+
+    @Override
+    public HTreeNode left() {
+        return (HTreeNode) super.left();
+    }
+
+    @Override
+    public int height() {
+        return this.height;
+    }
+
+    @Override
+    public void height(int height) {
         this.height = height;
     }
 }

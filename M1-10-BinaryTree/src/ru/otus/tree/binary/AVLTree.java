@@ -1,83 +1,99 @@
 package ru.otus.tree.binary;
 
-public class AVLTree extends BinaryTree {
+/**
+ * AVL Tree
+ */
+public class AVLTree extends AbstractBinaryTree<HTreeNode> implements HasHeight {
 
     @Override
-    public void insert(int key) {
-        super.insert(key);
-        rebalance();
-    }
-
-    @Override
-    public void remove(int key) {
-        super.remove(key);
-    }
-
-    private void bigLeftRotation(AVLTreeNode node) {
-        smallRightRotation(right(node));
-        smallLeftRotation(node);
-    }
-
-    private void bigRightRotation(AVLTreeNode node) {
-        smallLeftRotation(left(node));
-        smallRightRotation(node);
-    }
-
-    protected void smallLeftRotation(AVLTreeNode a) {
-        AVLTreeNode b = right(a);
-        swapParenthood(a, b);
-        a.setRight(b.getLeft());
-        recalculateHeight(a);
-        recalculateHeight(b);
-    }
-
-    protected void smallRightRotation(AVLTreeNode a) {
-        AVLTreeNode b = left(a);
-        swapParenthood(a, b);
-        a.setLeft(b.getRight());
-        recalculateHeight(a);
-        recalculateHeight(b);
-    }
-
-    private void swapParenthood(AVLTreeNode parent, AVLTreeNode child) {
-        child.setParent(parent.getParent());
-        if (child.getParent() == null) {
-            root = child;
+    protected boolean insertNode(TreeNode start, TreeNode node) {
+        if (super.insertNode(start, node)) {
+            upwindBalance((HTreeNode) node.parent());
+            return true;
         }
-        parent.setParent(child);
-    }
-
-    private void recalculateHeight(AVLTreeNode node) {
-        int height = Math.max(height(left(node)), height(right(node))) + 1;
-        node.setHeight(height);
-    }
-
-    private int height(AVLTreeNode node) {
-        return (node == null) ? 0 : node.getHeight();
-    }
-
-    private int balance(AVLTreeNode node) {
-        return height(right(node)) - height(left(node));
-    }
-
-    private AVLTreeNode left(AVLTreeNode node) {
-        return (AVLTreeNode) node.getLeft();
-    }
-
-    private AVLTreeNode right(AVLTreeNode node) {
-        return (AVLTreeNode) node.getRight();
-    }
-
-    protected void rebalance() {
-
-    }
-
-    public int getHeight() {
-        return height((AVLTreeNode) root);
+        return false;
     }
 
     @Override
-    protected BinaryTreeNode createNode(int key) {
+    protected TreeNode removeNode(TreeNode node) {
+        HTreeNode parent = (HTreeNode) super.removeNode(node);
+        if(parent != null) {
+            upwindBalance(parent);
+        }
+        return parent;
+    }
+
+    @Override
+    protected HTreeNode createNode(int key) {
         return new AVLTreeNode(key);
+    }
+
+    private void upwindBalance(HTreeNode node) {
+        if (node != null) {
+            HTreeNode parent = node.parent();
+            node.updateHeight();
+            int balance = node.balance();
+            if (balance <= -2) {
+                rightRotate(node);
+            } else if (balance >= 2) {
+                leftRotate(node);
+            }
+            upwindBalance(parent);
+        }
+    }
+
+    private void rightRotate(HTreeNode node) {
+        HTreeNode left = node.left();
+        if (left.balance() > 0) {
+            smallLeftRotation(left);
+            smallRightRotation(node);
+        } else {
+            smallRightRotation(node);
+        }
+    }
+
+    private void leftRotate(HTreeNode node) {
+        HTreeNode right = node.right();
+        if (right.balance() < 0) {
+            smallRightRotation(right);
+            smallLeftRotation(node);
+        } else {
+            smallLeftRotation(node);
+        }
+    }
+
+    private void smallRightRotation(HTreeNode a) {
+        HTreeNode parent = (HTreeNode) a.unlinkParent();
+        HTreeNode b = (HTreeNode) a.unlinkLeft();
+        HTreeNode c = (HTreeNode) b.unlinkRight();
+        a.linkLeft(c);
+        b.linkRight(a);
+        a.updateHeight();
+        b.updateHeight();
+        if (parent != null) {
+            b.linkParent(parent);
+        } else {
+            setRoot(b);
+        }
+    }
+
+    private void smallLeftRotation(HTreeNode a) {
+        HTreeNode parent = (HTreeNode) a.unlinkParent();
+        HTreeNode b = (HTreeNode) a.unlinkRight();
+        HTreeNode c = (HTreeNode) b.unlinkLeft();
+        a.linkRight(c);
+        b.linkLeft(a);
+        a.updateHeight();
+        b.updateHeight();
+        if (parent != null) {
+            b.linkParent(parent);
+        } else {
+            setRoot(b);
+        }
+    }
+
+    @Override
+    public int height() {
+        return (root() == null) ? 0 : root().height();
     }
 }

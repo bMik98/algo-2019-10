@@ -7,6 +7,4 @@ public interface IntTree {
     boolean search(int key);
 
     void remove(int key);
-
-    int size();
 }

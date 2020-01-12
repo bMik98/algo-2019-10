@@ -1,7 +1,7 @@
 package ru.otus.tree;
 
 import ru.otus.tree.binary.AVLTree;
-import ru.otus.tree.binary.BinaryTree;
+import ru.otus.tree.binary.BSTree;
 import ru.otus.tree.utils.Helper;
 
 import java.util.Arrays;
@@ -31,7 +31,7 @@ public class Application {
 
         System.out.println("# 10. Performance of Trees\n");
 
-        int size = 50_000;
+        int size = 100_000;
         int searchQty = size / 10;
         int removeQty = size / 10;
 
@@ -47,10 +47,10 @@ public class Application {
         int[] keysToSearch = Arrays.copyOf(Helper.createRandomArray(size), searchQty);
         int[] keysToRemove = Arrays.copyOf(Helper.createRandomArray(size), removeQty);
 
-        testTree("BinaryTree, sequential init", new BinaryTree(), sequentialKeys, keysToSearch, keysToRemove);
-        testTree("BinaryTree, random init", new BinaryTree(), randomKeys, keysToSearch, keysToRemove);
-        testTree("AVLTree, sequential init", new AVLTree(), sequentialKeys, keysToSearch, keysToRemove);
-        testTree("AVLTree, random init", new AVLTree(), randomKeys, keysToSearch, keysToRemove);
+        testTree("BSTree, init by sequence", new BSTree(), sequentialKeys, keysToSearch, keysToRemove);
+        testTree("BSTree, init by random", new BSTree(), randomKeys, keysToSearch, keysToRemove);
+        testTree("AVLTree, init by sequence", new AVLTree(), sequentialKeys, keysToSearch, keysToRemove);
+        testTree("AVLTree, init by random", new AVLTree(), randomKeys, keysToSearch, keysToRemove);
     }
 
     private static void testTree(String name, IntTree tree, int[] keysToInsert, int[] keysToSearch, int[] keysToRemove) {

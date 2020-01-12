@@ -19,7 +19,7 @@ class AVLTreeTest {
     private static final int[] KEYS = new int[]{
             HEAD_KEY, LEFT_KEY, RIGHT_KEY, LEFT_LEFT_KEY, LEFT_RIGHT_KEY, RIGHT_LEFT_KEY, RIGHT_RIGHT_KEY};
 
-    private IntTree tree;
+    private AVLTree tree;
 
     @BeforeEach
     void setUp() {
@@ -77,7 +77,7 @@ class AVLTreeTest {
 
     @Test
     void insertAll() {
-        fillTree(tree);
+        fillTree(tree, KEYS);
         assertEquals(KEYS.length, tree.size());
         for (int key : KEYS) {
             assertTrue(tree.search(key));
@@ -87,11 +87,11 @@ class AVLTreeTest {
 
     @Test
     void removeAll() {
-        fillTree(tree);
+        fillTree(tree, KEYS);
         for (int i = 0; i < KEYS.length; i++) {
             tree.remove(KEYS[i]);
             int expectedSize = KEYS.length - i - 1;
-            assertEquals(expectedSize, tree.size());
+            assertTreeSize(tree, expectedSize);
         }
         assertEquals(0, tree.size());
         for (int key : KEYS) {
@@ -136,20 +136,24 @@ class AVLTreeTest {
     }
 
     void removeOneElement(int key) {
-        fillTree(tree);
+        fillTree(tree, KEYS);
         tree.remove(key);
         assertEquals(KEYS.length - 1, tree.size());
         assertFalse(tree.search(key));
         assertTreeHeight(tree, 3);
     }
 
-    private void fillTree(IntTree tree) {
-        for (int key : KEYS) {
+    private void fillTree(IntTree tree, int[] keys) {
+        for (int key : keys) {
             tree.insert(key);
         }
     }
 
-    private void assertTreeHeight(IntTree tree, int expectedHeight) {
-        assertEquals(expectedHeight, ((AVLTree) tree).getHeight());
+    private void assertTreeHeight(HasHeight tree, int expectedHeight) {
+        assertEquals(expectedHeight, tree.height());
+    }
+
+    private void assertTreeSize(HasSize tree, int expectedHeight) {
+        assertEquals(expectedHeight, tree.size());
     }
 }

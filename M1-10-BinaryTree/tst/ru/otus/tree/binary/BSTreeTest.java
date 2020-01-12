@@ -3,11 +3,10 @@ package ru.otus.tree.binary;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.otus.tree.IntTree;
-import ru.otus.tree.binary.BinaryTree;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BinaryTreeTest {
+class BSTreeTest {
 
     private static final int HEAD_KEY = 10;
     private static final int LEFT_KEY = 5;
@@ -20,11 +19,11 @@ class BinaryTreeTest {
     private static final int[] KEYS = new int[]{
             HEAD_KEY, LEFT_KEY, RIGHT_KEY, LEFT_LEFT_KEY, LEFT_RIGHT_KEY, RIGHT_LEFT_KEY, RIGHT_RIGHT_KEY};
 
-    private IntTree tree;
+    private BSTree tree;
 
     @BeforeEach
     void setUp() {
-        tree = new BinaryTree();
+        tree = new BSTree();
     }
 
     @Test
