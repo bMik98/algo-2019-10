@@ -31,7 +31,7 @@ public class Application {
 
         System.out.println("# 10. Performance of Trees\n");
 
-        int size = 100_000;
+        int size = 150_000;
         int searchQty = size / 10;
         int removeQty = size / 10;
 
