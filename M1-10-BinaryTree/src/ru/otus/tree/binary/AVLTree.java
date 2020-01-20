@@ -17,7 +17,7 @@ public class AVLTree extends AbstractBinaryTree<HTreeNode> implements HasHeight 
     @Override
     protected TreeNode removeNode(TreeNode node) {
         HTreeNode parent = (HTreeNode) super.removeNode(node);
-        if(parent != null) {
+        if (parent != null) {
             upwindBalance(parent);
         }
         return parent;
@@ -46,20 +46,16 @@ public class AVLTree extends AbstractBinaryTree<HTreeNode> implements HasHeight 
         HTreeNode left = node.left();
         if (left.balance() > 0) {
             smallLeftRotation(left);
-            smallRightRotation(node);
-        } else {
-            smallRightRotation(node);
         }
+        smallRightRotation(node);
     }
 
     private void leftRotate(HTreeNode node) {
         HTreeNode right = node.right();
         if (right.balance() < 0) {
             smallRightRotation(right);
-            smallLeftRotation(node);
-        } else {
-            smallLeftRotation(node);
         }
+        smallLeftRotation(node);
     }
 
     private void smallRightRotation(HTreeNode a) {
